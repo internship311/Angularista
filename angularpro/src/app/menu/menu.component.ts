@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Dish } from '../shared/dish';
+import { DISHES } from '../shared/dishes';
+import { DishService } from '../services/dish.service';
 
-const DISHES : Dish[] = [
+/* const DISHES : Dish[] = [
   {
     id: '0',
     name: 'Uthappizza',
@@ -42,7 +44,7 @@ const DISHES : Dish[] = [
     price: '2.99',
     description: 'A delectable, semi-sweet New York Style Cheese Cake, with Graham cracker crust and spiced with Indian cardamoms'
   }
-]
+] */
 
 @Component({
   selector: 'app-menu',
@@ -51,12 +53,18 @@ const DISHES : Dish[] = [
 })
 export class MenuComponent implements OnInit {
 
-  dishes = DISHES;
+  dishes : Dish[] = DISHES;
 
-  selectedDish = DISHES[0];
-  constructor() { }
+  //selectedDish = DISHES[0];
+  selectedDish : Dish;
+  constructor(private dishService : DishService) { }
 
   ngOnInit(): void {
+    this.dishes = this.dishService.getDishes();
+  }
+
+  onSelect(dish : Dish){
+    this.selectedDish = dish;
   }
 
 }
